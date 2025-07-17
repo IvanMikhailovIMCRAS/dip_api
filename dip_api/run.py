@@ -1,8 +1,6 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import os
 from typing import List
-from penetration import PenetrationAnalisys
 
 def dip_frame(parameters: List[int|float]) -> np.ndarray:
     """_summary_
@@ -45,7 +43,6 @@ def dip_frame(parameters: List[int|float]) -> np.ndarray:
     pro = np.loadtxt("profile.out", skiprows=1).T
     return pro
         
-        
 if __name__ == '__main__':
     D = 50
     N1 = 210 
@@ -70,36 +67,3 @@ if __name__ == '__main__':
     phi2 = pro[3]
     end1 = pro[4]
     end2 = pro[5]
-    
-    # PA = PenetrationAnalisys(z, phi1, phi2)
-    # delta = 0.5 * (PA.delta1 + PA.delta2)
-    # z_new = np.linspace(0, D, 1000)
-    # phi_A = 0.5 * PA.phi_m * (1.0 - np.tanh((z_new - PA.z_m)/delta))
-    # phi_B = 0.5 * PA.phi_m * (1.0 + np.tanh((z_new - PA.z_m)/delta))
-   
-    # print((PA.delta1 - PA.delta2)/ delta)
-    # print(2* (PA.Sigma1 - PA.Sigma2)/ (PA.Sigma1 + PA.Sigma2))
-    
-    # plt.plot(z, phi1, color='red')
-    # plt.plot(z_new, phi_A, '--', color='red')
-    # plt.plot(z, phi2, color='blue')
-    # plt.plot(z_new, phi_B, '--', color='blue')  
-    # plt.ylabel(r'$\varphi_{1,2}(z)$')
-    
-    # plt.plot(z, phi1*phi2)
-    
-    plt.plot(z, end1, color='red') 
-    plt.plot(z, end2, color='blue')   
-    # plt.ylabel(r'$u_{1,2}(z)$')
-    
-    # plt.xlim(15, 25)    
-    plt.xlabel('$z$')
-    plt.ylabel('$g(z)$')
-    plt.show()
-    
-    # plt.xlabel('$z$')
-    # plt.ylabel(r'$U_{1,2}(z)$')
-    # plt.xlim(0, np.max(z)+0.5)
-    # plt.plot(z, u1)
-    # plt.plot(z, u2)
-    # plt.show()

@@ -7,7 +7,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-sfbox-api = {git = "https://github.com/IvanMikhailovIMCRAS/sfbox_api.git"}
+numpy = "^1.23.5"
 scipy = "^1.15.2"
 
 
