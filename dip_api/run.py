@@ -4,7 +4,35 @@ import os
 from typing import List
 from penetration import PenetrationAnalisys
 
-def frame(parameters: List[int|float]) -> np.ndarray:
+def dip_frame(parameters: List[int|float]) -> np.ndarray:
+    """_summary_
+
+    Args:
+        parameters (List[int | float]): 
+            D - distance between grafting surfaces
+            N1 - polymerization degree of the left brush
+            N2 - polymerization degree of the right brush
+            sigma1 - grafting density of the left brush  
+            sigma2 - grafting density of the right brush
+            p1 - the Kuhn leght of the left brush polymer chain
+            p2 - the Kuhn leght of the right brush polymer chain
+            ps - the Kuhn leght of the solvent molecule   
+            chi1 - Flory-Huggins parameter for the left polymer-solvent
+            chi2 - Flory-Huggins parameter for the right polymer-solvent
+            tau1 - dipole moment for the left polymer chain segment
+            tau2 - dipole moment for the right polymer chain segment 
+            tau_s - dipole moment for the solvent molecule
+            Ns - polymerization degree of the solvent molecule
+            eta - learning rate
+            nfree - number of the free steps 
+
+    Raises:
+        TimeoutError: _description_
+        FileNotFoundError: _description_
+
+    Returns:
+        np.ndarray: _description_
+    """
     with open(file='INPUT', mode='w') as file: 
         file.write('\n'.join(list(map(str, parameters))))  
     os.system("./dip.exe") 
@@ -27,31 +55,30 @@ if __name__ == '__main__':
     p1 = 1.0  
     p2 = 10.0
     ps = 1.0   
-    chi1 = 1.0   
+    chi1 = 0.0   
     chi2 = 0.0  
     tau1 = 0.0  
     tau2 = 0.0  
     tau_s= 0.0   
-    Ns = 15    
+    Ns = 1    
     eta = 0.02   
     nfree = 1000    
     p = [D, N1, N2, sigma1, sigma2, p1, p2, ps, chi1, chi2, tau1, tau2, tau_s, Ns, eta, nfree]
-    pro = frame(p)
+    pro = dip_frame(p)
     z = pro[0] - 0.5
     phi1 = pro[2]
     phi2 = pro[3]
-    u1 = pro[4]
-    u2 = pro[5]
+    end1 = pro[4]
+    end2 = pro[5]
     
-    PA = PenetrationAnalisys(z, phi1, phi2)
-    delta = 0.5 * (PA.delta1 + PA.delta2)
-    z_new = np.linspace(0, D, 1000)
-    phi_A = 0.5 * PA.phi_m * (1.0 - np.tanh((z_new - PA.z_m)/delta))
-    phi_B = 0.5 * PA.phi_m * (1.0 + np.tanh((z_new - PA.z_m)/delta))
-    # phi_A = 0.5 * PA.phi_m * (1.0 - np.tanh((z_new - PA.z_m)/PA.delta1))
-    # phi_B = 0.5 * PA.phi_m * (1.0 + np.tanh((z_new - PA.z_m)/PA.delta2))
-    print((PA.delta1 - PA.delta2)/ delta)
-    print(2* (PA.Sigma1 - PA.Sigma2)/ (PA.Sigma1 + PA.Sigma2))
+    # PA = PenetrationAnalisys(z, phi1, phi2)
+    # delta = 0.5 * (PA.delta1 + PA.delta2)
+    # z_new = np.linspace(0, D, 1000)
+    # phi_A = 0.5 * PA.phi_m * (1.0 - np.tanh((z_new - PA.z_m)/delta))
+    # phi_B = 0.5 * PA.phi_m * (1.0 + np.tanh((z_new - PA.z_m)/delta))
+   
+    # print((PA.delta1 - PA.delta2)/ delta)
+    # print(2* (PA.Sigma1 - PA.Sigma2)/ (PA.Sigma1 + PA.Sigma2))
     
     # plt.plot(z, phi1, color='red')
     # plt.plot(z_new, phi_A, '--', color='red')
@@ -59,14 +86,15 @@ if __name__ == '__main__':
     # plt.plot(z_new, phi_B, '--', color='blue')  
     # plt.ylabel(r'$\varphi_{1,2}(z)$')
     
-    plt.plot(z, phi1*phi2)
+    # plt.plot(z, phi1*phi2)
     
-    # plt.plot(z, u1, color='red') 
-    # plt.plot(z, u2, color='blue')   
+    plt.plot(z, end1, color='red') 
+    plt.plot(z, end2, color='blue')   
     # plt.ylabel(r'$u_{1,2}(z)$')
     
     # plt.xlim(15, 25)    
     plt.xlabel('$z$')
+    plt.ylabel('$g(z)$')
     plt.show()
     
     # plt.xlabel('$z$')

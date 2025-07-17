@@ -283,9 +283,9 @@ subroutine calc_one_point(N1, N2, sigma1, sigma2, p1, p2, ps, chi1, chi2, tau1, 
 	call end_point(n_layer, N1, Gf1, Gb1, WB1, dist1, 0)
 	call end_point(n_layer, N2, Gf2, Gb2, WB2, dist2, 0)
 	
-	!call print_profile(n_layer, alpha, phi_pol1, phi_pol2, dist1, dist2)
-	call print_profile(n_layer, alpha, phi_pol1, phi_pol2, &
-	& alpha(:)+U1(:,-1)/6.0+U1(:,0)*4.0/6.0+U1(:,+1)/6.0, alpha(:)+U2(:,-1)/6.0+U2(:,0)*4.0/6.0+U2(:,+1)/6.0)
+	call print_profile(n_layer, alpha, phi_pol1, phi_pol2, dist1, dist2)
+	!call print_profile(n_layer, alpha, phi_pol1, phi_pol2, &
+	!& alpha(:)+U1(:,-1)/6.0+U1(:,0)*4.0/6.0+U1(:,+1)/6.0, alpha(:)+U2(:,-1)/6.0+U2(:,0)*4.0/6.0+U2(:,+1)/6.0)
 
 !	write(*,'(a,1x,I6,5x,a,1x,E16.10)') 'n_layer:', n_layer, 'Free_Energy:', F
 	
