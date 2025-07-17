@@ -2,6 +2,9 @@ import numpy as np
 import os
 from typing import List
 
+TARGET_DIR = f"{os.path.dirname(os.path.realpath(__file__))}"[:-7]
+print(TARGET_DIR)
+
 def dip_frame(parameters: List[int|float]) -> np.ndarray:
     """_summary_
 
@@ -31,16 +34,16 @@ def dip_frame(parameters: List[int|float]) -> np.ndarray:
     Returns:
         np.ndarray: _description_
     """
-    with open(file='INPUT', mode='w') as file: 
+    with open(file=os.path.join(TARGET_DIR,"INPUT"), mode='w') as file:
         file.write('\n'.join(list(map(str, parameters))))  
-    os.system("./dip.exe") 
-    with open(file="INFO", mode='r') as file:
+    os.system(os.path.join(TARGET_DIR,"dip.exe")) 
+    with open(file=os.path.join(TARGET_DIR,"INFO"), mode='r') as file:
         text = file.read() 
     if "Awesome" not in text:
         raise TimeoutError("dip.exe shows an error")
-    if not os.path.exists("profile.out"):
+    if not os.path.exists(os.path.join(TARGET_DIR,"profile.out")):
         raise FileNotFoundError("file profile.out is not found")
-    pro = np.loadtxt("profile.out", skiprows=1).T
+    pro = np.loadtxt(os.path.join(TARGET_DIR,"profile.out"), skiprows=1).T
     return pro
         
 if __name__ == '__main__':

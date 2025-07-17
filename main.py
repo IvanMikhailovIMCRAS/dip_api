@@ -1,5 +1,6 @@
 from dip_api import dip_frame
 import matplotlib.pyplot as plt
+from dip_api import PenetrationAnalisys
    
 D = 50
 N1 = 210 
@@ -23,6 +24,10 @@ pro = dip_frame(p)
 z = pro[0] - 0.5
 phi1 = pro[2]
 phi2 = pro[3]
+
+PA = PenetrationAnalisys(z, phi1, phi2)
+
+print(PA.z_m)
 
 plt.plot(z, phi1, color="red")
 plt.plot(z, phi2, color="blue")
